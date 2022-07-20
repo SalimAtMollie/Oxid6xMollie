@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+
+  apache:
+    build: container/apache/.
+    hostname: ${DOMAIN}
+    volumes:
+      - ./data/www/:/var/www/html/:cached
+    environment:
+      DOMAIN: ${DOMAIN}
+      APACHE_PORT: ${APACHE_PORT}
+      OXID_VERSION: ${OXID_VERSION}
+      OXID_DEMODATA: ${OXID_DEMODATA}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.apache.rule=Host(`${DOMAIN}`)"
+      - "traefik.http.routers.apache.entrypoints=web"
+      - "traefik.http.services.apache.loadbalancer.server.port=80"
+    networks:
+      - br-traefik-public
+
+networks:
+    br-traefik-public:
+        external:
+          name: traefik-public
