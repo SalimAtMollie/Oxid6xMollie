@@ -2,7 +2,7 @@ version: '3'
 
 services:
 
-  apache:
+  oxid6_apache:
     build: container/apache/.
     hostname: ${DOMAIN}
     volumes:
@@ -17,9 +17,9 @@ services:
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.apache.rule=Host(`${DOMAIN}`)"
-      - "traefik.http.routers.apache.entrypoints=web"
-      - "traefik.http.services.apache.loadbalancer.server.port=80"
+      - "traefik.http.routers.oxid6_apache.rule=Host(`${DOMAIN}`)"
+      - "traefik.http.routers.oxid6_apache.entrypoints=web"
+      - "traefik.http.services.oxid6_apache.loadbalancer.server.port=80"
     networks:
       - br-traefik-public
 
