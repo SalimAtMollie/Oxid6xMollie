@@ -25,5 +25,4 @@ services:
 
 networks:
     br-traefik-public:
-        external:
-          name: traefik-public
+      name: traefik-public
